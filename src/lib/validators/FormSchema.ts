@@ -7,3 +7,10 @@ export const SignUpFormSchema=z.object({
 })
 
 export type SignUpFormSchemaValidator=z.infer<typeof SignUpFormSchema>
+
+export const LoginFormSchema=z.object({
+    email:z.string().email(),
+    password:z.string().min(6),
+})
+
+export type LoginFormSchemaValidator=z.infer<typeof LoginFormSchema>
