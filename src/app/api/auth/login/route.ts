@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { connect } from "@/lib/dbConfig";
 import { LoginFormSchemaValidator, SignUpFormSchemaValidator } from "@/lib/validators/FormSchema";
 import User from "../../../../../models/userModel";
-import { v4 as uuidv4 } from "uuid";
+import jwt from "jsonwebtoken"
 import brcyptjs from "bcryptjs";
 connect();
 export async function POST(req: NextRequest) {
@@ -30,14 +30,22 @@ export async function POST(req: NextRequest) {
         { status: 400 }
       );
     }
+    const tokenData={
+      id: user.id,
+      email: user.email,
+    }
+    const token= await jwt.sign(tokenData, process.env.MY_SECRET!,{
+        expiresIn: "1h",
+    });
 
-    return NextResponse.json(
+    const response= NextResponse.json(
       {
         message: "User  Logged In Successfully",
-        data: user,
+        user: user,
       }
     )
-    
+     response.cookies.set("token", token,{httpOnly:true});
+    return response;
   } catch (e) {
     return NextResponse.json(
       {

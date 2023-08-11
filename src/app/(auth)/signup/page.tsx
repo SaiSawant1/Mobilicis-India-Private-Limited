@@ -1,4 +1,5 @@
 import SignUpForm from "@/components/SignUpForm";
+import Link from "next/link";
 import React from "react";
 
 function SignUpPage() {
@@ -9,6 +10,7 @@ function SignUpPage() {
         <p className="text-gray-500">Please Enter Your details to register</p>
       </div>
       <SignUpForm/>
+      <p>Already a user ? <Link className='text-blue-500' href="/login"> click here to Login </Link></p>
     </div>
   );
 }

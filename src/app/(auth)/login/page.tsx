@@ -1,4 +1,5 @@
 import LoginForm from '@/components/LoginForm'
+import Link from 'next/link'
 import React from 'react'
 
 function LoginPage() {
@@ -9,6 +10,7 @@ function LoginPage() {
         <p className="text-gray-500">Welcome back, please enter your details</p>
       </div>
       <LoginForm/>
+      <p>New user ? <Link className='text-blue-500' href="/signup">Sign Up </Link> to register </p>
     </div>
   )
 }

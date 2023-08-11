@@ -16,11 +16,12 @@ import {
 } from "./ui/form";
 import { Button } from "./ui/button";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 function LoginForm() {
     const [isLoading, setLoading] = React.useState<boolean>(false);
     const [isDisabled, setDisabled] = React.useState<boolean>(false);
-  
+    const router=useRouter()
     const form = useForm<LoginFormSchemaValidator>({
       resolver: zodResolver(LoginFormSchema),
       defaultValues: {
@@ -35,7 +36,9 @@ function LoginForm() {
         setDisabled(true);
         setLoading(true);
         const payload = value;
-        await axios.post("/api/auth/login", payload);
+        const {data}=await axios.post("/api/auth/login", payload);
+        const {user}=data
+        router.push(`/user/${user.id}`);
       } catch (error) {
         console.log(error);
       } finally {
