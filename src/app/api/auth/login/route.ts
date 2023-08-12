@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
         user: user,
       }
     )
-     response.cookies.set("token", token,{httpOnly:true});
+     response.cookies.set("token", token,{httpOnly:true,expires:new Date(Date.now() + 1000 * 60 * 60)});
     return response;
   } catch (e) {
     return NextResponse.json(
