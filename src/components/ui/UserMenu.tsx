@@ -1,3 +1,4 @@
+'use client'
 import React from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 import { Button } from "./button";
@@ -5,6 +6,16 @@ import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 import { ChevronDown } from "lucide-react";
 
 function UserMenu() {
+
+  const [isMounted, setIsMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setIsMounted(true);
+  },[])
+
+  if(!isMounted) return null
+
+
   return (
     <Popover>
       <PopoverTrigger>
