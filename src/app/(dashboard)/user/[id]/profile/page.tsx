@@ -1,10 +1,11 @@
+
 import CertificationDetails from "@/components/ui/CertificationDetails";
+import EducationDetails from "@/components/ui/EducationDetails";
 import ExperienceDetails from "@/components/ui/Experience";
 import ProfileAbout from "@/components/ui/ProfileAbout";
 import ProfileImage from "@/components/ui/ProfileImage";
 import ProfileInfo from "@/components/ui/ProfileInfo";
 import ProfileSkills from "@/components/ui/ProfileSkills";
-import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import React from "react";
 
@@ -22,7 +23,7 @@ function ProfilePage() {
           <ProfileSkills />
         </div>
         <div className="flex flex-col gap-y-9 justify-between max-w-[50%] items-center flex-grow-[2]">
-          <div className="flex w-full border-[2px] rounded-xl  border-gray-200 px-4 py-5 flex-row">
+          <div className="flex w-full justify-between items-center border-[2px] rounded-xl  border-gray-200 px-4 py-5 flex-row">
             <div className="flex flex-col justify-start items-start">
               <h3 className="font-semibold">Professional Details</h3>
               <p>
@@ -31,9 +32,9 @@ function ProfilePage() {
             </div>
             <Image alt="starts" height={80} width={80} src="/Stars.png" />
           </div>
-
           <CertificationDetails />
-          <ExperienceDetails/>
+          <ExperienceDetails />
+          <EducationDetails/>
         </div>
       </div>
     </div>

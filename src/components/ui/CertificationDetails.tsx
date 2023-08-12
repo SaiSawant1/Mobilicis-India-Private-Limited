@@ -6,7 +6,7 @@ function CertificationDetails() {
   return (
     <div className="flex flex-col w-full gap-3 ">
       <div className="flex justify-between items-center">
-        <h3 className="font-semibold text-gray-500">Certification</h3>
+        <h3 className="font-semibold text-gray-700">Certification</h3>
         <Button className="bg-[#F0EFFA] hover:bg-slate-400 rounded-2xl px-7">
           Edit
         </Button>

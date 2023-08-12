@@ -32,9 +32,6 @@ function UserMenu() {
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-80 bg-white rounded-2xl">
-        <div className="p-2 hover:bg-gray-300 my-2 border-b-2 rounded-xl">
-            Complete Your profile Profile
-        </div>
         <div className="p-2 text-red-800 hover:bg-gray-300 my-2 border-b-2 rounded-xl">
             Log out
         </div>

@@ -17,8 +17,12 @@ import {
 import { Button } from "./ui/button";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { userStore } from "@/hooks/user-store";
 
 function LoginForm() {
+
+  const {setUser}=userStore()
+
     const [isLoading, setLoading] = React.useState<boolean>(false);
     const [isDisabled, setDisabled] = React.useState<boolean>(false);
     const router=useRouter()
@@ -38,7 +42,9 @@ function LoginForm() {
         const payload = value;
         const {data}=await axios.post("/api/auth/login", payload);
         const {user}=data
-        router.push(`/user/${user.id}`);
+        const {id,name,email}=user
+        setUser({id,name,email})
+        router.push(`/user/${id}`);
       } catch (error) {
         console.log(error);
       } finally {

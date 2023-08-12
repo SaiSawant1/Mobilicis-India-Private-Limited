@@ -1,6 +1,7 @@
+import UserModalProvider from '@/providers/UserModalProvider'
 import './globals.css'
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+
 
 
 
@@ -16,7 +17,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="w-screen h-screen">{children}</body>
+      <body className="w-screen h-screen">
+        <UserModalProvider/>
+        {children}
+        </body>
     </html>
   )
 }
