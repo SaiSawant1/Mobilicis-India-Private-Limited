@@ -22,15 +22,15 @@ import { userStore } from "@/hooks/user-store";
 import axios from "axios";
 
 function CreateUserForm() {
-    const {user}=userStore();
+    const {user,setUser}=userStore();
   const form = useForm<UserFormSchemaValidator>({
     resolver: zodResolver(UserFormSchema),
     defaultValues: {
       email: user.email,
       name: user.name,
-      about: "",
-      contact: 0,
-      image: "",
+      about: user.about,
+      contact: user.contact,
+      image: user.image,
     },
   });
 
@@ -42,8 +42,13 @@ function CreateUserForm() {
     try {
       setDisabled(true);
       setLoading(true);
-      const payload = value;
-      await axios.post("/api/user/personaldetails", payload)
+      const payload = {...value,id:user.id,_id:user._id};
+      const {data}=await axios.post("/api/user/personaldetails", payload)
+    
+      const responseUser=data.user
+
+      const {id,name,email,image,contact,about,_id}=responseUser
+      setUser({id,name,email,image,contact,about,_id:_id.toString()})
 
     } catch (error) {
       console.log(error);
@@ -106,7 +111,7 @@ function CreateUserForm() {
             <FormItem>
               <FormLabel>Your Contact</FormLabel>
               <FormControl>
-                <Input disabled={disabled} placeholder="Contact" {...field} />
+                <Input type="text" disabled={disabled} placeholder="Contact" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

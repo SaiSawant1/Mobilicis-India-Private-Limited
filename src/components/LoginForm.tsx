@@ -42,9 +42,13 @@ function LoginForm() {
         const payload = value;
         const {data}=await axios.post("/api/auth/login", payload);
         const {user}=data
-        const {id,name,email,image,contact,about}=user
-        setUser({id,name,email,image,contact,about})
-        router.push(`/user/${id}`);
+        const {id,name,email,image,contact,about,_id}=user
+    
+        setUser({id,name,email,image,contact,about,_id:_id.toString()})
+        if(image!=="" && about!=="" && contact!==""){
+          router.push(`/user/${id}`);
+        }
+        router.push(`/user/${id}/profile`);
       } catch (error) {
         console.log(error);
       } finally {

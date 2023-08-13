@@ -2,11 +2,12 @@ import {create} from "zustand"
 
 
 interface User{
+    _id:string,
     id:string,
     name:string,
     email:string,
     about:string,
-    contact:number,
+    contact:string,
     image:string,
 }
 
@@ -17,11 +18,12 @@ interface UserStoreProps{
 
 export const userStore = create<UserStoreProps>((set)=>({
     user:{
+        _id:'',
         id:'',
         name:'',
         email:'',
         about:'',
-        contact:0,
+        contact:"",
         image:'',
     },
     setUser(user) {

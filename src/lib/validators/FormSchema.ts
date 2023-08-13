@@ -20,7 +20,15 @@ export const UserFormSchema = z.object({
   email: z.string().email(),
   image: z.string(),
   about: z.string(),
-  contact: z.number(),
+  contact: z.string(),
 });
 
 export type UserFormSchemaValidator = z.infer<typeof UserFormSchema>;
+
+
+export const AddSkillFormSchema = z.object({
+  skills: z.string().min(3),
+
+})
+
+export type AddSkillFormSchemaValidator = z.infer<typeof AddSkillFormSchema>;
