@@ -25,18 +25,29 @@ export const UserFormSchema = z.object({
 
 export type UserFormSchemaValidator = z.infer<typeof UserFormSchema>;
 
-
 export const AddSkillFormSchema = z.object({
   skills: z.string().min(3),
-
-})
+});
 
 export type AddSkillFormSchemaValidator = z.infer<typeof AddSkillFormSchema>;
 
 export const AddCertificationFormSchema = z.object({
-  name:z.string().min(3),
-  grantedBy:z.string().min(3),
-})
+  name: z.string().min(3),
+  grantedBy: z.string().min(3),
+});
 
-export type AddCertificationFormSchemaValidator = z.infer<typeof AddCertificationFormSchema>;
+export type AddCertificationFormSchemaValidator = z.infer<
+  typeof AddCertificationFormSchema
+>;
 
+export const AddExperienceFormSchema = z.object({
+  startDateEndDate: z.string().min(3),
+  designation: z.string().min(3),
+  role: z.string().min(3),
+  employer: z.string().min(3),
+  duration: z.string().min(3),
+});
+
+export type AddExperienceFormSchemaValidator = z.infer<
+  typeof AddExperienceFormSchema
+>;
