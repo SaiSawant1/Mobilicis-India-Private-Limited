@@ -32,3 +32,11 @@ export const AddSkillFormSchema = z.object({
 })
 
 export type AddSkillFormSchemaValidator = z.infer<typeof AddSkillFormSchema>;
+
+export const AddCertificationFormSchema = z.object({
+  name:z.string().min(3),
+  grantedBy:z.string().min(3),
+})
+
+export type AddCertificationFormSchemaValidator = z.infer<typeof AddCertificationFormSchema>;
+
