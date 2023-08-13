@@ -5,6 +5,9 @@ interface User{
     id:string,
     name:string,
     email:string,
+    about:string,
+    contact:number,
+    image:string,
 }
 
 interface UserStoreProps{
@@ -17,6 +20,9 @@ export const userStore = create<UserStoreProps>((set)=>({
         id:'',
         name:'',
         email:'',
+        about:'',
+        contact:0,
+        image:'',
     },
     setUser(user) {
         set({user})

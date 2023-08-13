@@ -42,8 +42,8 @@ function LoginForm() {
         const payload = value;
         const {data}=await axios.post("/api/auth/login", payload);
         const {user}=data
-        const {id,name,email}=user
-        setUser({id,name,email})
+        const {id,name,email,image,contact,about}=user
+        setUser({id,name,email,image,contact,about})
         router.push(`/user/${id}`);
       } catch (error) {
         console.log(error);
