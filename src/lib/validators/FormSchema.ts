@@ -51,3 +51,13 @@ export const AddExperienceFormSchema = z.object({
 export type AddExperienceFormSchemaValidator = z.infer<
   typeof AddExperienceFormSchema
 >;
+
+export const AddEducationFormSchema = z.object({
+    college : z.string().min(3),
+    degree : z.string().min(3),
+    startYear : z.string().min(3),
+    endYear : z.string().min(3),
+    description : z.string().min(10),
+})
+
+export type AddEducationFormSchemaValidator = z.infer<typeof AddEducationFormSchema> 
