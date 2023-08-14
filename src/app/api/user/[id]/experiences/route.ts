@@ -54,3 +54,31 @@ export async function POST(
     );
   }
 }
+export async function PATCH(
+  request: NextRequest 
+) {
+  try {
+    const body = await request.json();
+    const { designation, duration, employer, role, startDateEndDate,_id } = body
+
+    const experience = await Experiences.findByIdAndUpdate(_id,{
+      designation,
+      duration,
+      employer,
+      role,
+      startDateEndDate
+    })
+
+    await experience.save();
+    return NextResponse.json({
+      experience,
+    });
+  } catch (error: any) {
+    return NextResponse.json(
+      {
+        message: error?.message,
+      },
+      { status: 500 }
+    );
+  }
+}
