@@ -8,7 +8,7 @@ import AddExperienceModal from "../modal/add-experience-modal";
 
 function ExperienceDetails() {
   const params = useParams();
-
+  const [isOpen,setOpen]=React.useState(false);
   const [experiences, setExperiences] = React.useState<
     {
       _id: string;
@@ -25,14 +25,25 @@ function ExperienceDetails() {
     try {
       const { data } = await axios.get(`/api/user/${params.id}/experiences`);
       setExperiences(data.experiences);
+      console.log(experiences);
     } catch (error) {
       console.log(error);
     }
   };
 
+  React.useEffect(()=>{
+    getExperiences();
+  },[params.id]);
+
+
+  const onClickAdd = () => {
+    setOpen(true);
+  }
+
+
   return (
     <>
-    <AddExperienceModal isOpen={false} onClose={() => {}} />
+    <AddExperienceModal isOpen={isOpen} onClose={() => setOpen(false)} />
       <div className="flex flex-col w-full gap-3 ">
         <div className="flex justify-between items-center">
           <h3 className="font-semibold text-gray-700">Experience</h3>
@@ -41,7 +52,7 @@ function ExperienceDetails() {
               Edit
             </Button>
           ) : (
-            <Button className="bg-[#F0EFFA] hover:bg-slate-400 rounded-2xl px-7">
+            <Button onClick={onClickAdd} className="bg-[#F0EFFA] hover:bg-slate-400 rounded-2xl px-7">
               Add
             </Button>
           )}
