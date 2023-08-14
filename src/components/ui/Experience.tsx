@@ -37,7 +37,6 @@ function ExperienceDetails() {
     try {
       const { data } = await axios.get(`/api/user/${params.id}/experiences`);
       setExperiences(data.experiences);
-      console.log(experiences);
     } catch (error) {
       console.log(error);
     }

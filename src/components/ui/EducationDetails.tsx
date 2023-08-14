@@ -3,6 +3,7 @@ import { Button } from "./button";
 import { useParams } from "next/navigation";
 import axios from "axios";
 import AddEducationModal from "../modal/add-education-modal";
+import UpdateEducationModal from "../modal/update-education-modal";
 
 function EducationDetails() {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -19,6 +20,17 @@ function EducationDetails() {
     }[]
   >([]);
 
+  const [updateOpen, setUpdateOpen] = React.useState(false);
+  const [currentCollege, setCurrentCollege] = React.useState({
+       _id: "",
+      userId: "",
+      college: "",
+      degree: "",
+      startYear: "",
+      endYear: "",
+      description: ""
+  })
+
   const params = useParams();
 
   const getColleges = async () => {
@@ -26,12 +38,18 @@ function EducationDetails() {
     setColleges(data.education);
   };
 
+  const handleUpdate=(college:any)=>{
+    setUpdateOpen(true);
+    setCurrentCollege(college);
+  }
+
   React.useEffect(() => {
     getColleges();
   }, [params.id]);
 
   return (
     <>
+    <UpdateEducationModal isOpen={updateOpen} onClose={() => setUpdateOpen(false)} initialValues={currentCollege} />
       <AddEducationModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
       <div className="flex flex-col w-full gap-3 ">
         <div className="flex justify-between items-center">
@@ -47,8 +65,9 @@ function EducationDetails() {
         <div className="flex gap-2 flex-col">
           { colleges?.map((college) => (
             <div
+            onClick={()=>handleUpdate(college)}
               key={college._id}
-              className="border-[1px] py-3 px-3 flex-col flex border-gray-300 rounded-3xl w-full"
+              className="border-[1px] cursor-pointer py-3 px-3 flex-col flex border-gray-300 rounded-3xl w-full"
             >
               <h3 className="font-bold my-2 text-blue-900">
                 {college.college}

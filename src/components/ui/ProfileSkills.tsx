@@ -20,7 +20,7 @@ function ProfileSkills() {
 
   React.useEffect(() => {
     getSkills();
-    console.log(skills)
+    
   }, [params.id]);
 
   return (

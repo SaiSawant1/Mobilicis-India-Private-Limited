@@ -4,6 +4,8 @@ import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 import { Button } from "./button";
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 import { ChevronDown } from "lucide-react";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
 
 function UserMenu() {
 
@@ -12,16 +14,16 @@ function UserMenu() {
   React.useEffect(() => {
     setIsMounted(true);
   },[])
-
+  const user=useSelector((state:RootState)=>state.user)
   if(!isMounted) return null
-
+  
 
   return (
     <Popover>
       <PopoverTrigger>
         <Button className="flex gap-x-2 rounded-xl px-3 py-8" variant={"outline"} size="lg">
           <Avatar className="rounded-xl h-10 w-10">
-            <AvatarImage  src="https://github.com/shadcn.png" />
+            <AvatarImage  src={user.image} />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
           <div className="flex flex-col">

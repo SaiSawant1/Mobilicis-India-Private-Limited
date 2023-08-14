@@ -17,12 +17,13 @@ import {
 import { Button } from "./ui/button";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { userStore } from "@/hooks/user-store";
+import {useSelector,useDispatch} from 'react-redux'
+import { RootState } from "@/store";
+import { setUser } from "@/store/userSlice";
 
 function LoginForm() {
 
-  const {setUser}=userStore()
-
+  const user=useSelector((state:RootState)=>state.user)
     const [isLoading, setLoading] = React.useState<boolean>(false);
     const [isDisabled, setDisabled] = React.useState<boolean>(false);
     const router=useRouter()
@@ -31,20 +32,27 @@ function LoginForm() {
       defaultValues: {
         email: "",
         password: "",
-       
       },
     });
   
+    const dispatch=useDispatch()
+
+    React.useEffect(()=>{
+      console.log(user)
+    },[user])
+
+
     const onSubmit = async (value: LoginFormSchemaValidator) => {
       try {
         setDisabled(true);
         setLoading(true);
         const payload = value;
         const {data}=await axios.post("/api/auth/login", payload);
-        const {user}=data
-        const {id,name,email,image,contact,about,_id}=user
-    
-        setUser({id,name,email,image,contact,about,_id:_id.toString()})
+        const res=data.user
+        const {id,name,email,image,contact,about,_id}=res
+        /* setUser({id,name,email,image,contact,about,_id:_id.toString()}) */
+        dispatch(setUser({id,name,email,image,contact,about,_id}))
+        
         if(image!=="" && about!=="" && contact!==""){
           router.push(`/user/${id}`);
         }

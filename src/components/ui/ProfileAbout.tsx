@@ -1,11 +1,19 @@
 'use client'
 import React from "react";
 import { Button } from "./button";
-import { userStore } from "@/hooks/user-store";
+import useOrigin from "@/hooks/use-origin";
+import { useParams,useRouter  } from "next/navigation";
+
 
 function ProfileAbout({about,name}:{about:string,name:string}) {
 
-  
+
+  const origin =useOrigin();
+  const {id}=useParams()
+  const router=useRouter();
+  const handleClick=()=>{
+      router.push(`${origin}/user/${id}/profile/update`);
+  }
   
   const formattedName= name.split(' ')[0];
 
@@ -16,7 +24,7 @@ function ProfileAbout({about,name}:{about:string,name:string}) {
         <h3 className="text-xl font-bold text-gray-600">
           About <span>{formattedName}</span>
         </h3>
-        <Button className="bg-[#F0EFFA] hover:bg-slate-400 rounded-2xl px-7">
+        <Button onClick={handleClick} className="bg-[#F0EFFA] hover:bg-slate-400 rounded-2xl px-7">
           Edit
         </Button>
       </div>

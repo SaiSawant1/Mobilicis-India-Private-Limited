@@ -1,19 +1,29 @@
 'use client'
 import React from "react";
 import { ChevronRight } from "lucide-react";
-import { useRouter,usePathname } from "next/navigation";
+import { useRouter,usePathname, useParams } from "next/navigation";
 import { cn } from "@/lib/utils";
+import {useSelector,useDispatch} from 'react-redux'
+import { RootState } from "@/store";
+import useOrigin from "@/hooks/use-origin";
+
+
 function MainNav() {
 
+  const user=useSelector((state:RootState)=>state.user)
+
+  const origin=useOrigin()
+  
   const path=usePathname()
- 
   const router =useRouter()
   
   const handleClickProfile = () => {
-    router.push(path+'/profile')
+    console.log(user)
+    router.push(origin+`/user/${user.id}/profile`)
+
   }
   const handleClickConnections = () => {
-    router.push(path+'/connections')
+    router.push(origin+`/user/${user.id}/connections`)
   }
 
   return (

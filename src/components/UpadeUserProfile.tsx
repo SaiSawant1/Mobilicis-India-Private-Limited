@@ -18,13 +18,17 @@ import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import UserImageUpload from "./ui/UserImageUpload";
 import { Button } from "./ui/button";
-
 import axios from "axios";
-import { useSelector } from "react-redux";
-import { RootState } from "@/store";
 
-function CreateUserForm() {
-  const user=useSelector((state:RootState)=>state.user)
+
+
+
+interface UpdateUserFormProps{
+    user: any
+}
+
+function UpdateUserForm({user}:UpdateUserFormProps) {
+    
   const form = useForm<UserFormSchemaValidator>({
     resolver: zodResolver(UserFormSchema),
     defaultValues: {
@@ -34,7 +38,10 @@ function CreateUserForm() {
       contact: user.contact,
       image: user.image,
     },
+    values:user
   });
+
+  
 
   const [isLoading, setLoading] = React.useState<boolean>(false);
   const [disabled, setDisabled] = React.useState<boolean>(false);
@@ -44,8 +51,9 @@ function CreateUserForm() {
     try {
       setDisabled(true);
       setLoading(true);
-      const payload = {...value,id:user.id,_id:user._id};
-      const {data}=await axios.post("/api/user/personaldetails", payload)
+      
+
+
 
     } catch (error) {
       console.log(error);
@@ -147,4 +155,4 @@ function CreateUserForm() {
   );
 }
 
-export default CreateUserForm;
+export default UpdateUserForm;
