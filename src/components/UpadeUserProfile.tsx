@@ -19,6 +19,7 @@ import { Textarea } from "./ui/textarea";
 import UserImageUpload from "./ui/UserImageUpload";
 import { Button } from "./ui/button";
 import axios from "axios";
+import { useParams } from "next/navigation";
 
 
 
@@ -41,7 +42,7 @@ function UpdateUserForm({user}:UpdateUserFormProps) {
     values:user
   });
 
-  
+  const {id}=useParams();
 
   const [isLoading, setLoading] = React.useState<boolean>(false);
   const [disabled, setDisabled] = React.useState<boolean>(false);
@@ -51,9 +52,9 @@ function UpdateUserForm({user}:UpdateUserFormProps) {
     try {
       setDisabled(true);
       setLoading(true);
-      
-
-
+      const _id=user._id
+      const payload={id,_id,...value}
+      axios.patch(`/api/user/${id}/updateprofile`,payload);
 
     } catch (error) {
       console.log(error);
