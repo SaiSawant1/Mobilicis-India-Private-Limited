@@ -13,12 +13,15 @@ function ProfileSkills() {
 
   const [isOpen, setIsOpen] = React.useState(false);
 
-  const getSkills = async () => {
-    const { data } = await axios.get(`/api/user/${params.id}/skills`);
-    setSkills(data.skills);
-  };
+ 
 
   React.useEffect(() => {
+
+    const getSkills = async () => {
+      const { data } = await axios.get(`/api/user/${params.id}/skills`);
+      setSkills(data.skills);
+    };
+
     getSkills();
     
   }, [params.id]);

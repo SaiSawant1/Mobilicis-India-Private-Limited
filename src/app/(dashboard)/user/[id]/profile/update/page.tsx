@@ -9,14 +9,15 @@ function UpdatePage() {
 
   const params = useParams();
 
-  const getUser = async () => {
-    const { data } = await axios.get(`/api/user/${params.id}`);
-    setUser(data.user);
-  };
+  
 
   React.useEffect(() => {
+    const getUser = async () => {
+      const { data } = await axios.get(`/api/user/${params.id}`);
+      setUser(data.user);
+    };
     getUser();
-  }, []);
+  }, [params.id]);
 
   return (
     <div className=" min-h-screen bg-white">

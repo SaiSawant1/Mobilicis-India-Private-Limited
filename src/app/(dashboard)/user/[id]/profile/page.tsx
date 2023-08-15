@@ -24,15 +24,16 @@ function ProfilePage() {
   const [currentUser, setCurrentUser] = React.useState<CurrentUserInterface>({image:"",about:"",name:"",email:"",contact:""});
   const params = useParams();
 
-  const getUser = async () => {
-    const { data } = await axios.get(`/api/user/${params.id}`);
-    const { user } = data;
-    setCurrentUser(user);
-  };
+  
 
   React.useEffect(() => {
+    const getUser = async () => {
+      const { data } = await axios.get(`/api/user/${params.id}`);
+      const { user } = data;
+      setCurrentUser(user);
+    };
     getUser();
-  }, [params.id,getUser]);
+  }, [params.id]);
 
   return (
     <div className="bg-[#FAFBFF] pt-5 sm:pr-12 border-[2px] border-gray-50 flex-grow ">

@@ -31,11 +31,7 @@ function CertificationDetails() {
   
   const params = useParams();
 
-  const getCertifications = async () => {
-    const { data } = await axios.get(`/api/user/${params.id}/certifications`);
-    setCertifications(data.certifications);
-   
-  };
+ 
 
   const onClickAdd = () => {
     setIsOpen(true);
@@ -47,6 +43,13 @@ function CertificationDetails() {
   }
 
   React.useEffect(() => {
+
+    const getCertifications = async () => {
+      const { data } = await axios.get(`/api/user/${params.id}/certifications`);
+      setCertifications(data.certifications);
+     
+    };
+
     getCertifications();
   }, [params.id]);
 

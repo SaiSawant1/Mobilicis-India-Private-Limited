@@ -9,7 +9,7 @@ function useOrigin() {
 
     React.useEffect(() => {
         setMounted(true);
-    })
+    },[])
 
     if (!mounted) return ""
 

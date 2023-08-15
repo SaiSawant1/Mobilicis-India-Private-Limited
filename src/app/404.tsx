@@ -5,11 +5,10 @@ import React from 'react'
 
 function Custom404() {
 
-    const router=useRouter();
-
-    React.useEffect(()=>{
+  const router=useRouter()
+      
        router.push("/login") 
-    },[])
+  
 
   return (
     <div>Custom404</div>

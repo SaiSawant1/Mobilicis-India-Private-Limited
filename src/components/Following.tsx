@@ -9,18 +9,19 @@ function Following() {
   const user = useSelector((state: RootState) => state.user);
   const [followers, setFollowers] = React.useState([]);
 
-  const getAllOthers = async () => {
-    const res = await axios.get(`/api/following/${user._id}`);
-    setFollowers(res.data);
-  };
+  
 
   React.useEffect(() => {
+    const getAllOthers = async () => {
+      const res = await axios.get(`/api/following/${user._id}`);
+      setFollowers(res.data);
+    };
     getAllOthers();
-  }, []);
+  }, [user._id]);
 
   return (<div className="w-full flex m-4 gap-9 flex-wrap">
     {followers.map((user:any)=>(
-            <ProfileDisplay user={user} isFollowing={true} />
+            <ProfileDisplay key={user._id} user={user} isFollowing={true} />
         ))}
   </div>)
 }

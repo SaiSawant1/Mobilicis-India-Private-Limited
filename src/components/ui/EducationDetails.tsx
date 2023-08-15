@@ -33,17 +33,19 @@ function EducationDetails() {
 
   const params = useParams();
 
-  const getColleges = async () => {
-    const { data } = await axios.get(`/api/user/${params.id}/education`);
-    setColleges(data.education);
-  };
+  
 
   const handleUpdate=(college:any)=>{
+    
     setUpdateOpen(true);
     setCurrentCollege(college);
   }
 
   React.useEffect(() => {
+    const getColleges = async () => {
+      const { data } = await axios.get(`/api/user/${params.id}/education`);
+      setColleges(data.education);
+    };
     getColleges();
   }, [params.id]);
 

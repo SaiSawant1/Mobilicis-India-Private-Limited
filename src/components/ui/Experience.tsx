@@ -31,7 +31,10 @@ function ExperienceDetails() {
     employer: "",
   });
 
-  const getExperiences = async () => {
+  
+
+  React.useEffect(() => {
+    const getExperiences = async () => {
     try {
       const { data } = await axios.get(`/api/user/${params.id}/experiences`);
       const { experiences } = data;
@@ -40,8 +43,6 @@ function ExperienceDetails() {
       console.log(error);
     }
   };
-
-  React.useEffect(() => {
     getExperiences();
   }, [params.id]);
 
