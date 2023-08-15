@@ -17,8 +17,11 @@ import {
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
+import useOrigin from "@/hooks/use-origin";
 
 interface UpdateEducationModalProps {
   isOpen: boolean;
@@ -31,10 +34,14 @@ interface UpdateEducationModalProps {
     startYear: string;
     endYear: string;
     description: string;
-  }
+  };
 }
 
-function UpdateEducationModal({ isOpen, onClose, initialValues }: UpdateEducationModalProps) {
+function UpdateEducationModal({
+  isOpen,
+  onClose,
+  initialValues,
+}: UpdateEducationModalProps) {
   const form = useForm<AddEducationFormSchemaValidator>({
     resolver: zodResolver(AddEducationFormSchema),
     defaultValues: {
@@ -47,17 +54,22 @@ function UpdateEducationModal({ isOpen, onClose, initialValues }: UpdateEducatio
     values: initialValues,
   });
 
-  const params=useParams();
-  const _id=initialValues._id
-  const onSubmit= async(values:AddEducationFormSchemaValidator)=>{
-    try {
-        const payload={_id,...values}
-        await axios.patch(`/api/user/${params.id}/education`,payload)
+  const params = useParams();
+  const _id = initialValues._id;
+  const router = useRouter();
+  const user = useSelector((state: RootState) => state.user);
+  const origin = useOrigin();
 
+  const onSubmit = async (values: AddEducationFormSchemaValidator) => {
+    try {
+      const payload = { _id, ...values };
+      await axios.patch(`/api/user/${params.id}/education`, payload);
+      router.push(origin + `/user/${user._id}/profile`);
+      window.location.reload()
     } catch (error) {
-        console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   return (
     <Modal
@@ -110,36 +122,39 @@ function UpdateEducationModal({ isOpen, onClose, initialValues }: UpdateEducatio
             />
           </div>
           <FormField
-              name="degree"
-              control={form.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Degree in</FormLabel>
-                  <FormControl>
-                    <Input placeholder={initialValues.degree} {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              name="description"
-              control={form.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Description</FormLabel>
-                  <FormControl>
-                    <Textarea placeholder={initialValues.description} {...field}/>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <div className="flex justify-center m-4 items-center w-full">
-                <Button type="submit" variant="outline">
-                    Add
-                </Button>
-            </div>
+            name="degree"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Degree in</FormLabel>
+                <FormControl>
+                  <Input placeholder={initialValues.degree} {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            name="description"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Description</FormLabel>
+                <FormControl>
+                  <Textarea
+                    placeholder={initialValues.description}
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <div className="flex justify-center m-4 items-center w-full">
+            <Button type="submit" variant="outline">
+              Add
+            </Button>
+          </div>
         </form>
       </Form>
     </Modal>

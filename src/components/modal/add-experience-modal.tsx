@@ -10,7 +10,10 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import axios from "axios";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
+import { RootState } from "@/store";
+import { useSelector } from "react-redux";
+import useOrigin from "@/hooks/use-origin";
 
 interface AddExperienceModalProps {
   isOpen: boolean;
@@ -30,10 +33,14 @@ function AddExperienceModal({ isOpen, onClose }: AddExperienceModalProps) {
   });
 
   const { id } = useParams();
-
+  const router=useRouter()
+  const user=useSelector((state:RootState)=>state.user)
+  const origin=useOrigin()
   const onSubmit = async (value: AddExperienceFormSchemaValidator) => {
     try {
       await axios.post(`/api/user/${id}/experiences`, value);
+      router.push(origin+`/user/${user._id}/profile`)
+      window.location.reload()
     } catch (error) {
       console.log(error)
     }

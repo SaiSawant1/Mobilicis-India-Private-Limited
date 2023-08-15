@@ -10,8 +10,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
+import useOrigin from "@/hooks/use-origin";
 
 interface AddCertificationModalProps {
   isOpen: boolean;
@@ -31,11 +34,15 @@ function AddCertificationModal({
   });
 
   const { id } = useParams();
-
+  const router=useRouter()
+  const user=useSelector((state:RootState)=>state.user)
+  const origin=useOrigin()
   const onSubmit = async (value: AddCertificationFormSchemaValidator) => {
     
     try {
       await axios.post(`/api/user/${id}/certifications`, value);
+      router.push(origin+`/user/${user._id}/profile`)
+      window.location.reload()
     } catch (error) {
       console.log(error);
     }

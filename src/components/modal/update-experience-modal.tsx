@@ -17,7 +17,10 @@ import {
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import axios from "axios";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
+import useOrigin from "@/hooks/use-origin";
 
 interface UpdateExperienceModalProps {
   isOpen: boolean;
@@ -48,16 +51,20 @@ function UpdateExperienceModal({
       employer: initialValues.role,
     },
     values: initialValues,
-
   });
 
   const { id } = useParams();
   const _id = initialValues._id;
-
+  const router = useRouter();
+  const user = useSelector((state: RootState) => state.user);
+  const origin = useOrigin();
   const onSubmit = async (value: AddExperienceFormSchemaValidator) => {
     try {
       const payload = { _id, ...value };
       await axios.patch(`/api/user/${id}/experiences`, payload);
+      window.location.reload()
+      router.push(origin + `/user/${user._id}/profile`);
+      onClose();
     } catch (error) {
       console.log(error);
     }
@@ -65,7 +72,7 @@ function UpdateExperienceModal({
 
   return (
     <Modal
-      title="Add Experience"
+      title="Update Experience"
       description="Please enter your details"
       isOpen={isOpen}
       onClose={onClose}

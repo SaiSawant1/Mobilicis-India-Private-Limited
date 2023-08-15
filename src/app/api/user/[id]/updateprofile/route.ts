@@ -8,7 +8,7 @@ connect();
 export async function PATCH(request:NextRequest){
     try{
         const body = await request.json();
-        const {id,name,email,image,about,contact,_id} = body
+        const {name,email,image,about,contact,_id} = body
 
         const user = await User.findByIdAndUpdate(_id,{name,email,image,about,contact})
 

@@ -49,14 +49,15 @@ function LoginForm() {
         const payload = value;
         const {data}=await axios.post("/api/auth/login", payload);
         const res=data.user
-        const {id,name,email,image,contact,about,_id}=res
+        const {name,email,image,contact,about,_id}=res
         /* setUser({id,name,email,image,contact,about,_id:_id.toString()}) */
-        dispatch(setUser({id,name,email,image,contact,about,_id}))
+        
+        dispatch(setUser({name,email,image,contact,about,_id:_id.toString()}))
         
         if(image!=="" && about!=="" && contact!==""){
-          router.push(`/user/${id}`);
+          router.push(`/user/${_id}`);
         }
-        router.push(`/user/${id}/profile`);
+        router.push(`/user/${_id}/profile`);
       } catch (error) {
         console.log(error);
       } finally {

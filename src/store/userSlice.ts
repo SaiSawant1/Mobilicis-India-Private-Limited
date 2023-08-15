@@ -4,7 +4,6 @@ import type { PayloadAction } from "@reduxjs/toolkit"
 
 export interface user{
     _id:string,
-    id:string,
     name:string,
     email:string,
     contact:string,
@@ -14,7 +13,6 @@ export interface user{
 
 const initialState:user={
     _id:"",
-    id:"",
     name:"",
     email:"",
     contact:"",

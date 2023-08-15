@@ -20,9 +20,9 @@ import UserImageUpload from "./ui/UserImageUpload";
 import { Button } from "./ui/button";
 
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
-
+import { setUser } from "@/store/userSlice";
 function CreateUserForm() {
   const user=useSelector((state:RootState)=>state.user)
   const form = useForm<UserFormSchemaValidator>({
@@ -39,14 +39,15 @@ function CreateUserForm() {
   const [isLoading, setLoading] = React.useState<boolean>(false);
   const [disabled, setDisabled] = React.useState<boolean>(false);
 
-
+  const dispatch=useDispatch();
   const onSubmit = async (value: UserFormSchemaValidator) => {
     try {
       setDisabled(true);
       setLoading(true);
-      const payload = {...value,id:user.id,_id:user._id};
+      const payload = {...value,_id:user._id};
       const {data}=await axios.post("/api/user/personaldetails", payload)
-
+      const {name,email,image,contact,about,_id}=data.user
+      dispatch(setUser({name,email,image,contact,about,_id:_id.toString()}))
     } catch (error) {
       console.log(error);
     } finally {

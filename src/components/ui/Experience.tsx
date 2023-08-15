@@ -2,11 +2,11 @@
 import Image from "next/image";
 import React from "react";
 import { Button } from "./button";
-import { useParams } from "next/navigation";
+import { useParams} from "next/navigation";
 import axios from "axios";
 import AddExperienceModal from "../modal/add-experience-modal";
 import UpdateExperienceModal from "../modal/update-experience-modal";
-
+import {useRouter } from "next/router";
 function ExperienceDetails() {
   const params = useParams();
   const [isOpen, setOpen] = React.useState(false);
@@ -49,6 +49,8 @@ function ExperienceDetails() {
   const onClickAdd = () => {
     setOpen(true);
   };
+ 
+  
   const onUpdate = (selected: any) => {
     setUpdateOpen(true);
     setCurrentExperience(selected);

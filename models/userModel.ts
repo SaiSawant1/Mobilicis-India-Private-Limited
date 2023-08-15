@@ -1,13 +1,18 @@
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
-  id: String,
   name: String,
   email: String,
   password: String,
   contact: String,
   about: String,
   image: String,
+  followers: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "user",
+    }
+  ],
   createAt: {
     type: Date,
     default: Date.now,

@@ -18,12 +18,10 @@ function MainNav() {
   const router =useRouter()
   
   const handleClickProfile = () => {
-    console.log(user)
-    router.push(origin+`/user/${user.id}/profile`)
-
+    router.push(origin+`/user/${user._id}/profile`)
   }
   const handleClickConnections = () => {
-    router.push(origin+`/user/${user.id}/connections`)
+    router.push(origin+`/user/${user._id}/connections`)
   }
 
   return (

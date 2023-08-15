@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
       );
     }
     const tokenData={
-      id: user.id,
+      _id: user._id,
       email: user.email,
     }
     const token= await jwt.sign(tokenData, process.env.MY_SECRET!,{

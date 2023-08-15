@@ -8,7 +8,7 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    const skills = await Skills.find({ id: params.id });
+    const skills = await Skills.find({ userId: params.id });
 
     return NextResponse.json({
       skills,
@@ -36,14 +36,14 @@ export async function POST(
 
     skillsArray.forEach(async (name: string) => {
       const newSkill = await Skills.create({
-        id,
+        userId:id,
         name,
       });
 
       await newSkill.save();
     });
 
-    const res = await Skills.find({ id });
+    const res = await Skills.find({userId: id });
 
     return NextResponse.json({
       res,

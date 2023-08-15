@@ -17,8 +17,11 @@ import {
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
+import useOrigin from "@/hooks/use-origin";
 
 interface AddEducationModalProps {
   isOpen: boolean;
@@ -37,17 +40,19 @@ function AddEducationModal({ isOpen, onClose }: AddEducationModalProps) {
     },
   });
 
-  const params=useParams();
-
-  const onSubmit= async(values:AddEducationFormSchemaValidator)=>{
+  const params = useParams();
+  const router = useRouter();
+  const user = useSelector((state: RootState) => state.user);
+  const origin=useOrigin()
+  const onSubmit = async (values: AddEducationFormSchemaValidator) => {
     try {
-        
-        await axios.post(`/api/user/${params.id}/education`,values)
-
+      await axios.post(`/api/user/${params.id}/education`, values);
+      router.push(origin + `/user/${user._id}/profile`);
+      window.location.reload()
     } catch (error) {
-        console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   return (
     <Modal
@@ -100,36 +105,36 @@ function AddEducationModal({ isOpen, onClose }: AddEducationModalProps) {
             />
           </div>
           <FormField
-              name="degree"
-              control={form.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Degree in</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Btech" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              name="description"
-              control={form.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Description</FormLabel>
-                  <FormControl>
-                    <Textarea placeholder="describe your experience" {...field}/>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <div className="flex justify-center m-4 items-center w-full">
-                <Button type="submit" variant="outline">
-                    Add
-                </Button>
-            </div>
+            name="degree"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Degree in</FormLabel>
+                <FormControl>
+                  <Input placeholder="Btech" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            name="description"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Description</FormLabel>
+                <FormControl>
+                  <Textarea placeholder="describe your experience" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <div className="flex justify-center m-4 items-center w-full">
+            <Button type="submit" variant="outline">
+              Add
+            </Button>
+          </div>
         </form>
       </Form>
     </Modal>

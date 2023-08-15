@@ -11,7 +11,7 @@ export async function GET(
   try {
     const { id } = params;
 
-    const user = await User.findOne({ id: id });
+    const user = await User.findById(id);
 
     return NextResponse.json({
       user,

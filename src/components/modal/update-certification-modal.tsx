@@ -10,7 +10,10 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import axios from "axios";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
+import useOrigin from "@/hooks/use-origin";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
 
 interface UpdateCertificationModalProps {
   isOpen: boolean;
@@ -34,15 +37,22 @@ function UpdateCertificationModal({
       name: initialValues.name,
       grantedBy: initialValues.grantedBy,
     },
+    values: initialValues,
   });
 
   const { id } = useParams();
 
+  const router = useRouter();
+  const user = useSelector((state: RootState) => state.user);
+  const origin=useOrigin()
+  
   const onSubmit = async (value: AddCertificationFormSchemaValidator) => {
     try {
-        const _id =initialValues._id
-        const payload={_id,...value}
+      const _id =initialValues._id
+      const payload={_id,...value}
       await axios.patch(`/api/user/${id}/certifications`, payload);
+      window.location.reload()
+      router.push(origin + `/user/${user._id}/profile`);
     } catch (error) {
       console.log(error);
     }

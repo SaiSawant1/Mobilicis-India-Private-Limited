@@ -32,7 +32,6 @@ export async function POST(req: NextRequest) {
 
     const user = await User.create({
       email,
-      id: uuidv4(),
       name,
       password: hashedPassword,
     });

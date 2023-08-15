@@ -9,9 +9,9 @@ export async function POST(req: NextRequest) {
     try {
         const body= await  req.json();
 
-        const {name,email,image,about,contact,id,_id}=body
+        const {name,email,image,about,contact,_id}=body
 
-        if(!name || !email || !image || !about || !contact || !id){
+        if(!name || !email || !image || !about || !contact ){
             return NextResponse.json({
                 message: "Please fill all the fields"
             })
