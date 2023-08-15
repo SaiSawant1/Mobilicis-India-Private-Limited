@@ -32,7 +32,7 @@ function ProfilePage() {
 
   React.useEffect(() => {
     getUser();
-  }, [params.id]);
+  }, [params.id,getUser]);
 
   return (
     <div className="bg-[#FAFBFF] pt-5 sm:pr-12 border-[2px] border-gray-50 flex-grow ">
