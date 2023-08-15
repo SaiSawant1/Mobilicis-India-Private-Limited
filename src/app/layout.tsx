@@ -1,7 +1,7 @@
 'use client'
 import UserModalProvider from "@/providers/UserModalProvider";
 import "./globals.css";
-import type { Metadata } from "next";
+
 import { Provider } from "react-redux";
 import { store } from "@/store";
 import {PersistGate} from 'redux-persist/integration/react'
