@@ -13,7 +13,7 @@ export async function PATCH(request:NextRequest){
         const user = await User.findByIdAndUpdate(_id,{name,email,image,about,contact})
 
         return NextResponse.json({
-            message:"success"
+            user
         })
     }catch(error){
         return NextResponse.json({

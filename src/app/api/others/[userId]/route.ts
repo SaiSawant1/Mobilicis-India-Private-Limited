@@ -24,7 +24,6 @@ export async function GET(request: NextRequest,{params}:{params:{userId:string}}
                 $nin: [new mongoose.Types.ObjectId(userId)] // Not in the followers array
             }
         });
-        console.log(nonFollowers);
 
         // Return the list of non-followers
         return NextResponse.json(nonFollowers);

@@ -6,10 +6,17 @@ import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 import { ChevronDown } from "lucide-react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 function UserMenu() {
 
   const [isMounted, setIsMounted] = React.useState(false);
+  const router=useRouter()
+  const logout=async()=>{
+    await axios.delete('/api/auth/logout')
+    router.push('/login')
+  }
 
   React.useEffect(() => {
     setIsMounted(true);
@@ -34,7 +41,7 @@ function UserMenu() {
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-80 bg-white rounded-2xl">
-        <div className="p-2 text-red-800 hover:bg-gray-300 my-2 border-b-2 rounded-xl">
+        <div onClick={logout} className="p-2 text-red-800 hover:bg-gray-300 my-2 border-b-2 rounded-xl">
             Log out
         </div>
       </PopoverContent>

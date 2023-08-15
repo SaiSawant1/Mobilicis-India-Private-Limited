@@ -19,10 +19,11 @@ import { Textarea } from "./ui/textarea";
 import UserImageUpload from "./ui/UserImageUpload";
 import { Button } from "./ui/button";
 import axios from "axios";
-import { useParams } from "next/navigation";
 
+import { setUser } from "@/store/userSlice";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useDispatch } from "react-redux";
 
 interface UpdateUserFormProps {
   user: any;
@@ -46,13 +47,31 @@ function UpdateUserForm({ user }: UpdateUserFormProps) {
   const [isLoading, setLoading] = React.useState<boolean>(false);
   const [disabled, setDisabled] = React.useState<boolean>(false);
 
+  const dispatch = useDispatch();
+
   const onSubmit = async (value: UserFormSchemaValidator) => {
     try {
       setDisabled(true);
       setLoading(true);
       const _id = user._id;
       const payload = { _id, ...value };
-      axios.patch(`/api/user/${_id}/updateprofile`, payload);
+      const { data } = await axios.patch(`/api/user/${_id}/updateprofile`, payload);
+
+      const {name,email,image,contact,about}=data.user
+
+      dispatch(setUser({name,email,image,contact,about,_id:_id.toString()}))
+
+      toast.success("Profile Updated", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      })
+
     } catch (error) {
       toast.error("Something went wrong!", {
         position: "top-right",
