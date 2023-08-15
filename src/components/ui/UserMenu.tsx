@@ -21,16 +21,16 @@ function UserMenu() {
   return (
     <Popover>
       <PopoverTrigger>
-        <Button className="flex gap-x-2 rounded-xl px-3 py-8" variant={"outline"} size="lg">
+        <Button className="sm:flex border-0 sm:gap-x-2 sm:border-[1px] sm: sm:rounded-xl sm:px-3 sm:py-8" variant={"outline"} size="lg">
           <Avatar className="rounded-xl h-10 w-10">
             <AvatarImage  src={user.image} />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
-          <div className="flex flex-col">
+          <div className=" hidden sm:flex flex-col">
             <span className="text-sm text-blue-900">Welcome back,</span>
             <span className="text-lg font-semibold text-blue-950">Sai Sawant</span>
           </div>
-          <ChevronDown className="text-blue-900 ml-5" />
+          <ChevronDown className="hidden sm:block text-blue-900 ml-5" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-80 bg-white rounded-2xl">

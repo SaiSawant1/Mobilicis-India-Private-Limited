@@ -17,9 +17,14 @@ export async function GET(request: NextRequest,{params}:{params:{userId:string}}
 
         // Find users who don't follow the currentUser
         const nonFollowers = await User.find({
-            _id: { $ne: new mongoose.Types.ObjectId(userId) }, // Exclude the currentUser
-            followers: { $not: { $elemMatch: { _id: new mongoose.Types.ObjectId(userId) } } } // Not in the followers array
+            _id: {
+                $ne: new mongoose.Types.ObjectId(userId) // Exclude the currentUser
+            },
+            followers: {
+                $nin: [new mongoose.Types.ObjectId(userId)] // Not in the followers array
+            }
         });
+        console.log(nonFollowers);
 
         // Return the list of non-followers
         return NextResponse.json(nonFollowers);

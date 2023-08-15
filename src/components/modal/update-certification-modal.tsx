@@ -14,7 +14,8 @@ import { useParams, useRouter } from "next/navigation";
 import useOrigin from "@/hooks/use-origin";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 interface UpdateCertificationModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -54,7 +55,16 @@ function UpdateCertificationModal({
       window.location.reload()
       router.push(origin + `/user/${user._id}/profile`);
     } catch (error) {
-      console.log(error);
+      toast.error('Something went wrong!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
     }
   };
 
@@ -65,6 +75,7 @@ function UpdateCertificationModal({
       isOpen={isOpen}
       onClose={onClose}
     >
+      <ToastContainer />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="flex flex-col gap-6">

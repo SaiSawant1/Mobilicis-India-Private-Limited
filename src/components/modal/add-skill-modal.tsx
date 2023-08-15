@@ -22,7 +22,8 @@ import { useRouter } from "next/navigation";
 import { RootState } from "@/store";
 import { useSelector } from "react-redux";
 import useOrigin from "@/hooks/use-origin";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 interface AddSkillsModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -46,7 +47,16 @@ function AddSkillModal({ isOpen, onClose, id }: AddSkillsModalProps) {
       router.push(origin + `/user/${user._id}/profile`);
       window.location.reload()
     } catch (e) {
-      console.log(e);
+      toast.error('Something went wrong!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
     }
   };
 
@@ -57,6 +67,7 @@ function AddSkillModal({ isOpen, onClose, id }: AddSkillsModalProps) {
       onClose={onClose}
       description="Please enter your skills"
     >
+      <ToastContainer />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <FormField

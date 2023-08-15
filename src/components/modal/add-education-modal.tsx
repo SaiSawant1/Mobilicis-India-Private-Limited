@@ -23,6 +23,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import useOrigin from "@/hooks/use-origin";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 interface AddEducationModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -50,7 +52,16 @@ function AddEducationModal({ isOpen, onClose }: AddEducationModalProps) {
       router.push(origin + `/user/${user._id}/profile`);
       window.location.reload()
     } catch (error) {
-      console.log(error);
+      toast.error('Something went wrong!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
     }
   };
 
@@ -61,6 +72,7 @@ function AddEducationModal({ isOpen, onClose }: AddEducationModalProps) {
       isOpen={isOpen}
       onClose={onClose}
     >
+      <ToastContainer />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <FormField

@@ -9,7 +9,7 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    const experiences = await Experiences.find({ userId: params.id });
+    const experiences = await Experiences.findOne({ userId: params.id });
 
     return NextResponse.json({
         experiences,
