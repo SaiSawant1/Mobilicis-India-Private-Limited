@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import User from "../../../../models/userModel";
+import { ObjectId } from "mongoose";
 
 export async function POST(request:NextRequest){
     try{
@@ -34,11 +35,11 @@ export async function PATCH(request: NextRequest) {
         const user2 = await User.findById(connectionId);
 
         if (user1) {
-            user1.followers = user1.followers.filter((id:any) => id === connectionId);
+            user1.followers = user1.followers.filter((id:any) => id.toString() !== user2._id.toString());
             await user1.save();
         }
         if (user2) {
-            user2.followers = user2.followers.filter((id:any) => id === currentUser);
+            user2.followers = user2.followers.filter((id:any) => id.toString() !== user1._id.toString());
             await user2.save();
         }
         return NextResponse.json({ message: "success" });
